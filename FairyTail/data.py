@@ -43,7 +43,10 @@ class GetData():
 
         return X_train
 
-    def get(self, min_occurence=200, max_sentence_len=20):
+    def get(self,
+            min_occurence=200,
+            max_sentence_len=20,
+            percentage_of_sentences=10):
         '''
         Loads a list of sentences
         Returns X (a list of lists of words) and y (a list of words)
@@ -51,8 +54,14 @@ class GetData():
         '''
 
         # load sentences
-        data = self.load_imdb_data(percentage_of_sentences=10)
+        data = self.load_imdb_data(
+            percentage_of_sentences=percentage_of_sentences)
 
+        # remore apostrophes (because they were also removed
+        # in the pre-trained word2vec model we use)
+        data = [sentence.replace("'", "") for sentence in data]
+
+        # store the data in a pandas dataframe
         df = pd.DataFrame({
             "word" : (" ".join(data)).split()
         })
