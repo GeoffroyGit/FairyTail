@@ -12,6 +12,7 @@ jupyter
 tensorflow
 seaborn
 gensim
+nltk
 
 # # tests/linter
 # black
